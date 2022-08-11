@@ -47,7 +47,7 @@ class Matchstick():
         
         #数字の配置
         x = 20
-        y = 150
+        y = 145
         for i in range(3):
             for j in range(2):
                 #マッチ棒の向きの変更

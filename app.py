@@ -1,16 +1,11 @@
-import queue
-import threading
 import mediapipe as mp
-import urllib.request
 from pathlib import Path
-from typing import List, NamedTuple
 from matchstick import Matchstick
 import av
 import cv2
 import numpy as np
 import pydub
 import streamlit as st
-from aiortc.contrib.media import MediaPlayer
 
 from streamlit_webrtc import (
     RTCConfiguration,
@@ -62,10 +57,10 @@ def matchstick():
     def callback(frame: av.VideoFrame) -> av.VideoFrame:
         img = frame.to_ndarray(format="bgr24")
         img = cv2.flip(img,1)
-        # img = game.combi(img)
+        img = game.combi(img)
         hands = mp_hands.Hands(
-        min_detection_confidence=0.7,
-        min_tracking_confidence=0.7,
+        min_detection_confidence=0.5,
+        min_tracking_confidence=0.5,
         max_num_hands = 1
         )
         results = hands.process(img)
