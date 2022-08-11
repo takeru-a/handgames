@@ -69,7 +69,7 @@ def matchstick():
         results = hands.process(img)
         if results.multi_hand_landmarks:
                 for hand_landmarks in results.multi_hand_landmarks:
-                    #game.move(img, hand_landmarks)
+                    game.move(img, hand_landmarks)
                     game.hand(img, hand_landmarks)
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
@@ -79,6 +79,11 @@ def matchstick():
         rtc_configuration=RTC_CONFIGURATION,
         video_frame_callback=callback,
         media_stream_constraints={"video": True, "audio": False},
+        video_html_attrs={
+            "style": {"width": "100%", "margin": "0 auto", "border": "1px yellow solid"},
+            "controls": False,
+            "autoPlay": True,
+        },
         async_processing=True,
     )
 
