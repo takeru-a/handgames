@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 #WebRTCの設定
 RTC_CONFIGURATION = RTCConfiguration(
     #Google提供のSTUNサーバー
-    {"Servers": [{"urls": ["stun:stun.l.google.com:19302"]}]}
+    {"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]}
     # Mozilla提供のSTUNサーバー
     # {"Servers": [{"urls": ["stun.services.mozilla.com"]}]}
 )
