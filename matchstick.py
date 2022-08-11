@@ -117,7 +117,7 @@ class Matchstick():
         self.matchstick_points[21] = [x,y,xd+x,y+yd]
         dwhite = white
         img[dwhite!=[255, 255, 255]] = dwhite[dwhite!=[255, 255, 255]]
-        return img
+ 
     
     def pinch(self, img, point):
         #つまんだ座標
@@ -197,4 +197,3 @@ class Matchstick():
                 if landmark_point[8][0] >= img.shape[1]-64 and landmark_point[8][0]<=img.shape[1]:
                     self.restart()
                     cv2.putText(img, "Restart!", (20,60), cv2.FONT_HERSHEY_SIMPLEX, 2, (0,0,255), 2)
-        return img

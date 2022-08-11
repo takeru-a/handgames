@@ -54,21 +54,22 @@ def matchstick():
     マッチ棒を一回だけ動かして正しい式に直してください
     """
     mp_hands = mp.solutions.hands #モデルの作成
+    hands = mp_hands.Hands(
+        min_detection_confidence=0.2,
+        min_tracking_confidence=0.2,
+        max_num_hands = 1
+        )
     game = Matchstick()
     
     def callback(frame: av.VideoFrame) -> av.VideoFrame:
         img = frame.to_ndarray(format="bgr24")
         img = cv2.flip(img,1)
-        # img = game.combi(img)
-        hands = mp_hands.Hands(
-        min_detection_confidence=0.5,
-        min_tracking_confidence=0.5,
-        max_num_hands = 1
-        )
+        game.combi(img)
+        
         results = hands.process(img)
         if results.multi_hand_landmarks:
                 for hand_landmarks in results.multi_hand_landmarks:
-                    # img = game.move(img, hand_landmarks)
+                    #game.move(img, hand_landmarks)
                     game.hand(img, hand_landmarks)
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
