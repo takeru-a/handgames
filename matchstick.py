@@ -19,6 +19,7 @@ class Matchstick():
         self.matchstick_points = [None] * N
         #前の座標
         self.prepoint = None
+        
     def hand(self, img, landmarks):
         image_width, image_height = img.shape[1], img.shape[0]
         landmark_point = []
@@ -29,12 +30,19 @@ class Matchstick():
             # 画面上の座標位置へ変換
             landmark_x = min(int(landmark.x * image_width), image_width - 1)
             landmark_y = min(int(landmark.y * image_height), image_height - 1)
-            landmark_z = landmark.z
+            # landmark_z = landmark.z
 
-            landmark_point.append([landmark_x, landmark_y, landmark_z])
+            landmark_point.append([landmark_x, landmark_y])
         for i in range(len(landmark_point)):
         #サークルを描画
-            cv2.circle(img, (landmark_point[i][0], landmark_point[i][1]), 7, (0, 0, 255), -1)
+            cv2.circle(img, (landmark_point[i][0], landmark_point[i][1]), 5, (255, 0, 0), -1)
+            if i % 4 == 0 and i != 0:
+                pass
+            elif (i-1) % 4 == 0:
+                cv2.line(img, tuple(landmark_point[0]), tuple(landmark_point[i]), (0, 0, 0), 2)
+                cv2.line(img, tuple(landmark_point[i]), tuple(landmark_point[i+1]), (0, 0, 0), 2)
+            else:
+                cv2.line(img, tuple(landmark_point[i]), tuple(landmark_point[i+1]), (0, 0, 0), 2)
     
     def combi(self, img):
         bimg  = cv2.imread('./imgs/matchstick.jpg')
@@ -143,7 +151,6 @@ class Matchstick():
                     if matchstick_point[1] <= self.prepoint[1] <= matchstick_point[3]:
                         if self.matchstick[i] != 1:
                             self.matchstick[i] = 1
-                            # print(i)
                             self.moving = False
                             self.pinch_flag = False
         self.prepoint = points    
@@ -151,8 +158,9 @@ class Matchstick():
     
     def correct(self):
         flag = False
-        correct_box = (1,1,1,0,1,1,1,0,1,1,0,1,1,1,1,0,1,1,1,1,1,0)
-        if tuple(self.matchstick)==correct_box:
+        correct_box1 = (0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1)
+        correct_box2 = (1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0)
+        if tuple(self.matchstick) == correct_box1 or tuple(self.matchstick) == correct_box2:
             flag = True
         return flag
     
@@ -191,7 +199,7 @@ class Matchstick():
 
         #正解に合わせてメッセージを表示
         if self.correct():
-            cv2.putText(img, "Great!", (20,80), cv2.FONT_HERSHEY_SIMPLEX, 2, (255,0,0), 2)
+            cv2.putText(img, "Great!", (20,60), cv2.FONT_HERSHEY_SIMPLEX, 2, (255,0,0), 2)
         # 64 x 64の画像を使用    
         if landmark_point[8][1] >= 0 and landmark_point[8][1]<=64:
                 if landmark_point[8][0] >= img.shape[1]-64 and landmark_point[8][0]<=img.shape[1]:
