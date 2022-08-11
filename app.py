@@ -22,7 +22,7 @@ RTC_CONFIGURATION = RTCConfiguration(
     #Google提供のSTUNサーバー
     {"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]}
     # Mozilla提供のSTUNサーバー
-    # {"Servers": [{"urls": ["stun.services.mozilla.com"]}]}
+    # {"iceServers": [{"urls": ["stun.services.mozilla.com"]}]}
 )
 
 
@@ -59,7 +59,7 @@ def matchstick():
     def callback(frame: av.VideoFrame) -> av.VideoFrame:
         img = frame.to_ndarray(format="bgr24")
         img = cv2.flip(img,1)
-        img = game.combi(img)
+        # img = game.combi(img)
         hands = mp_hands.Hands(
         min_detection_confidence=0.5,
         min_tracking_confidence=0.5,
